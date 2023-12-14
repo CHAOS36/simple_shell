@@ -9,16 +9,16 @@
  */
 char *_strcpy(char *dest, char *src)
 {
-	int i = 0;
+	int s = 0;
 
 	if (dest == src || src == 0)
 		return (dest);
-	while (src[i])
+	while (src[s])
 	{
-		dest[i] = src[i];
-		i++;
+		dest[s] = src[s];
+		s++;
 	}
-	dest[i] = 0;
+	dest[s] = 0;
 	return (dest);
 }
 
@@ -53,14 +53,14 @@ char *_strdup(const char *str)
  */
 void _puts(char *str)
 {
-	int i = 0;
+	int s = 0;
 
 	if (!str)
 		return;
-	while (str[i] != '\0')
+	while (str[s] != '\0')
 	{
-		_putchar(str[i]);
-		i++;
+		_putchar(str[s]);
+		s++;
 	}
 }
 
@@ -73,15 +73,15 @@ void _puts(char *str)
  */
 int _putchar(char c)
 {
-	static int i;
+	static int s;
 	static char buf[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	if (c == BUF_FLUSH || s >= WRITE_BUF_SIZE)
 	{
-		write(1, buf, i);
-		i = 0;
+		write(1, buf, s);
+		s = 0;
 	}
 	if (c != BUF_FLUSH)
-		buf[i++] = c;
+		buf[s++] = c;
 	return (1);
 }
