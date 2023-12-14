@@ -10,28 +10,28 @@
  */
 int is_chain(info_t *info, char *buf, size_t *p)
 {
-	size_t j = *p;
+	size_t d = *p;
 
-	if (buf[j] == '|' && buf[j + 1] == '|')
+	if (buf[d] == '|' && buf[d + 1] == '|')
 	{
-		buf[j] = 0;
-		j++;
+		buf[d] = 0;
+		d++;
 		info->cmd_buf_type = CMD_OR;
 	}
-	else if (buf[j] == '&' && buf[j + 1] == '&')
+	else if (buf[d] == '&' && buf[d + 1] == '&')
 	{
-		buf[j] = 0;
-		j++;
+		buf[d] = 0;
+		d++;
 		info->cmd_buf_type = CMD_AND;
 	}
-	else if (buf[j] == ';') /* found end of this command */
+	else if (buf[d] == ';') /* found end of this command */
 	{
-		buf[j] = 0; /* replace semicolon with null */
+		buf[d] = 0; /* replace semicolon with null */
 		info->cmd_buf_type = CMD_CHAIN;
 	}
 	else
 		return (0);
-	*p = j;
+	*p = d;
 	return (1);
 }
 
@@ -47,14 +47,14 @@ int is_chain(info_t *info, char *buf, size_t *p)
  */
 void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
 {
-	size_t j = *p;
+	size_t d = *p;
 
 	if (info->cmd_buf_type == CMD_AND)
 	{
 		if (info->status)
 		{
 			buf[i] = 0;
-			j = len;
+			d = len;
 		}
 	}
 	if (info->cmd_buf_type == CMD_OR)
@@ -62,11 +62,11 @@ void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
 		if (!info->status)
 		{
 			buf[i] = 0;
-			j = len;
+			d = len;
 		}
 	}
 
-	*p = j;
+	*p = d;
 }
 
 /**
@@ -79,7 +79,7 @@ int replace_alias(info_t *info)
 {
 	int i;
 	list_t *node;
-	char *p;
+	char *d;
 
 	for (i = 0; i < 10; i++)
 	{
@@ -87,13 +87,13 @@ int replace_alias(info_t *info)
 		if (!node)
 			return (0);
 		free(info->argv[0]);
-		p = _strchr(node->str, '=');
-		if (!p)
+		d = _strchr(node->str, '=');
+		if (!d)
 			return (0);
-		p = _strdup(p + 1);
-		if (!p)
+		d = _strdup(d + 1);
+		if (!d)
 			return (0);
-		info->argv[0] = p;
+		info->argv[0] = d;
 	}
 	return (1);
 }
